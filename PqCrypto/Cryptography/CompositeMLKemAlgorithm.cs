@@ -24,39 +24,66 @@ namespace Rotherprivat.PqCrypto.Cryptography
     // MLKEM1024-ECDH-P521-SHA3-256 OID: 1.3.6.1.5.5.7.6.66
 
 
+    /// <summary>
+    /// <para>
+    ///   Definition of CompositeMLKem algorithms, a combination of traditional KEM- and Post Quantum ML-Kem Algorithm.
+    /// </para>
+    /// <para>
+    ///   See: <a href="https://lamps-wg.github.io/draft-composite-kem/draft-ietf-lamps-pq-composite-kem.html">Composite ML-KEM for use in X.509 Public Key Infrastructure</a>
+    /// </para>
+    /// </summary>
 
     public sealed class CompositeMLKemAlgorithm
     {
+        // specified algorithms
         private static readonly CompositeMLKemAlgorithm[] _Algorithms =
         {
-            new("MLKEM768-ECDH-P256-SHA3-256", "MLKEM768-P256", "1.3.6.1.5.5.7.6.59", MLKemAlgorithm.MLKem768, ECCurve.NamedCurves.nistP256),
+            new ("MLKEM768-ECDH-P256-SHA3-256", "MLKEM768-P256", "1.3.6.1.5.5.7.6.59", MLKemAlgorithm.MLKem768, ECCurve.NamedCurves.nistP256),
             new ("MLKEM768-ECDH-P384-SHA3-256", "MLKEM768-P384", "1.3.6.1.5.5.7.6.60", MLKemAlgorithm.MLKem768, ECCurve.NamedCurves.nistP384),
             new ("MLKEM1024-ECDH-P384-SHA3-256", "MLKEM1024-P384", "1.3.6.1.5.5.7.6.63", MLKemAlgorithm.MLKem1024, ECCurve.NamedCurves.nistP384),
             new ("MLKEM1024-ECDH-P521-SHA3-256", "MLKEM1024-P521", "1.3.6.1.5.5.7.6.66", MLKemAlgorithm.MLKem1024, ECCurve.NamedCurves.nistP521)
         };
 
+        /// <summary>
+        /// MLKEM768-ECDH-P256-SHA3-256
+        /// </summary>
         public static CompositeMLKemAlgorithm KMKem768WithECDhP256Sha3 { get; } = _Algorithms[0];
+
+        /// <summary>
+        /// MLKEM768-ECDH-P384-SHA3-256
+        /// </summary>
         public static CompositeMLKemAlgorithm KMKem768WithECDhP384Sha3 { get; } = _Algorithms[1];
+
+        /// <summary>
+        /// MLKEM1024-ECDH-P384-SHA3-256
+        /// </summary>
         public static CompositeMLKemAlgorithm KMKem1024WithECDhP384Sha3 { get; } = _Algorithms[2];
+
+        /// <summary>
+        /// MLKEM1024-ECDH-P521-SHA3-256
+        /// </summary>
         public static CompositeMLKemAlgorithm KMKem1024WithECDhP521Sha3 { get; } = _Algorithms[3];
 
+        /// <summary>
+        /// Get algorithm definition from OID
+        /// </summary>
+        /// <param name="oid"><see cref="Oid">Algoritm OID</see></param>
+        /// <returns>algorithm definition or null, if the oid can not be resolved</returns>
         public static CompositeMLKemAlgorithm? FromOid(string oid) => _Algorithms.FirstOrDefault(x => x.Oid == oid);
 
-        private CompositeMLKemAlgorithm(string name, string label, string oid, MLKemAlgorithm mLKemAlgorithm, ECCurve eCCurve)
-        {
-            Name = name;
-            Label = Encoding.ASCII.GetBytes(label);
-            Oid = oid;
-            MLKemAlgorithm = mLKemAlgorithm;
-            ECCurve = eCCurve;
-        }
+        /// <summary>
+        /// Algorithm Name
+        /// </summary>
+        public string Name { get; }
+
+        /// <summary>
+        /// Algoritm OID
+        /// </summary>
+        public string Oid { get; }
+
         public override int GetHashCode() => Name.GetHashCode();
 
         public override string ToString() => Name;
-
-        public string Name { get; }
-
-        public string Oid { get; }
 
         internal MLKemAlgorithm MLKemAlgorithm { get; }
 
@@ -74,7 +101,6 @@ namespace Rotherprivat.PqCrypto.Cryptography
 
         internal int ECPublicKeySizeInBytes => 2 * ECPointValueSizeInBytes + 1;
 
-
         internal int ECPrivateKeyDSizeInBytes => ECCurve.Oid.FriendlyName switch
         {
             "nistP256" => 51,
@@ -82,5 +108,14 @@ namespace Rotherprivat.PqCrypto.Cryptography
             "nistP521" => 82,
             _ => throw new CryptographicException("Invalid EC-Curve")
         };
+
+        private CompositeMLKemAlgorithm(string name, string label, string oid, MLKemAlgorithm mLKemAlgorithm, ECCurve eCCurve)
+        {
+            Name = name;
+            Label = Encoding.ASCII.GetBytes(label);
+            Oid = oid;
+            MLKemAlgorithm = mLKemAlgorithm;
+            ECCurve = eCCurve;
+        }
     }
 }

@@ -205,3 +205,5 @@ $RECYCLE.BIN/
 *.msi
 *.msm
 *.msp
+/docfx/api
+/docfx/_site
