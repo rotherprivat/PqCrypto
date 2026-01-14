@@ -12,13 +12,11 @@ namespace Rotherprivat.PqCrypto.Cryptography
     /// <summary>
     /// <para>
     ///   Keys and algorithm implementation of the CompositeMLKem, a composed traditional and 
-    ///   ML-KEM post quantum key exchange algorithm
+    ///   ML-KEM post quantum key exchange algorithm.
     /// </para>
     /// <para>
-    ///   <a href="https://lamps-wg.github.io/draft-composite-kem/draft-ietf-lamps-pq-composite-kem.html">Documentation on GitHub</a>
-    /// </para>
-    /// <para>
-    ///   <a href="https://github.com/lamps-wg/draft-composite-kem">Repo on GitHub</a>
+    ///   See IETF standard <a href="https://lamps-wg.github.io/draft-composite-kem/draft-ietf-lamps-pq-composite-kem.html">documentation</a>
+    ///   and <a href="https://github.com/lamps-wg/draft-composite-kem">repository</a> on GitHub.
     /// </para>
     /// </summary>
     public abstract class CompositeMLKem : IDisposable
