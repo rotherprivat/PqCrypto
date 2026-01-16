@@ -38,7 +38,7 @@ namespace Rotherprivat.PqTest.Cryptography
             catch (CryptographicException) { }
             catch (Exception e)
             {
-                Assert.Fail($"Unexpected exception:\n{e.ToString()}");
+                Assert.Fail($"Unexpected exception:\n{e}");
             }
 #pragma warning restore SYSLIB5006
         }
@@ -92,7 +92,7 @@ namespace Rotherprivat.PqTest.Cryptography
             catch (CryptographicException) { }
             catch (Exception e)
             {
-                Assert.Fail($"Unexpected exception:\n{e.ToString()}");
+                Assert.Fail($"Unexpected exception:\n{e}");
             }
 
 #pragma warning restore SYSLIB5006

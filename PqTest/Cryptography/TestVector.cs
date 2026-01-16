@@ -15,7 +15,7 @@ namespace Rotherprivat.PqTest.Cryptography
         [JsonPropertyName("tests")]
         public Test[]? testsJson
         { 
-            get => tests.Values.ToArray();
+            get => [.. tests.Values];
             set
             {
                 if (value == null)
@@ -27,7 +27,7 @@ namespace Rotherprivat.PqTest.Cryptography
         }
 
         [JsonIgnore]
-        public Dictionary<string, Test> tests { get; } = new Dictionary<string, Test>();
+        public Dictionary<string, Test> tests { get; } = [];
     }
 
     public class Test

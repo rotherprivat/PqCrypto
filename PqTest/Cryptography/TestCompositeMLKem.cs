@@ -3,6 +3,7 @@ using Rotherprivat.PqCrypto.Cryptography;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.Json;
@@ -25,16 +26,36 @@ namespace Rotherprivat.PqTest.Cryptography
 
         [TestMethod]
         [DynamicData(nameof(CompositeMlKemAlgorithms))]
-        public void CompositeMLKemRoundtripExchangeKey(CompositeMLKemAlgorithm algorithm)
+        public void CompositeMLKemRoundtripExchangeKey_pcks8(CompositeMLKemAlgorithm algorithm)
+        {
+            using var keyMaterial = CompositeMLKem.GenerateKey(algorithm);
+
+
+            var derPublicKey = keyMaterial.ExportSubjectPublicKeyInfo();
+            var pkcs8Key = keyMaterial.ExportPkcs8PrivateKey();
+
+            using var alice = CompositeMLKem.ImportPkcs8PrivateKey(pkcs8Key);
+            using var bob = CompositeMLKem.ImportSubjectPublicKeyInfo(derPublicKey);
+
+            bob.Encapsulate(out var ciphertext, out var bobsSecret);
+
+            var aliceSecret = alice.Decapsulate(ciphertext);
+
+            Assert.IsTrue(bobsSecret.SequenceEqual(aliceSecret), "Key exchange failed, the shared keys are different");
+        }
+
+        [TestMethod]
+        [DynamicData(nameof(CompositeMlKemAlgorithms))]
+        public void CompositeMLKemRoundtripExchangeKey_pcks8encrypted(CompositeMLKemAlgorithm algorithm)
         {
             using var keyMaterial = CompositeMLKem.GenerateKey(algorithm);
 
 
             // PEM uses DER and plain public Key
             var derPublicKey = keyMaterial.ExportSubjectPublicKeyInfoPem();
-            var pkcs8Key = keyMaterial.ExportPkcs8PrivateKey();
+            var pkcs8Key = keyMaterial.ExportEncryptedPkcs8PrivateKey("secret", new PbeParameters(PbeEncryptionAlgorithm.Aes256Cbc, HashAlgorithmName.SHA256, 210000));
 
-            using var alice = CompositeMLKem.ImportPkcs8PrivateKey(pkcs8Key);
+            using var alice = CompositeMLKem.ImportEncryptedPkcs8PrivateKey("secret", pkcs8Key);
             using var bob = CompositeMLKem.ImportFromPem(derPublicKey);
 
             bob.Encapsulate(out var ciphertext, out var bobsSecret);
