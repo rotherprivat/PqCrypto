@@ -13,16 +13,24 @@ namespace Rotherprivat.PqTest.Examples
         public void HybridMLKemEncryptDecrypt_MLKem1024()
         {
             string message = "The quick brown fox jumps over the lazy dog.";
+
+            // generate key material
             var algorithm = MLKemAlgorithm.MLKem1024;
+            using var keys = MLKem.GenerateKey(algorithm);
+            // you could also use: HybridMlKem.GenerateKey(algorithm);
 
-            using var decryptor = HybridMlKem.GenerateKey(algorithm);
+#pragma warning disable SYSLIB5006
+            var alicePrivateKey = keys.ExportPkcs8PrivateKey();
+            var alicePublicKey = keys.ExportSubjectPublicKeyInfo();
+#pragma warning restore SYSLIB5006
 
-            var cipher = decryptor.Encrypt(Encoding.UTF8.GetBytes(message));
+            // bob encrypts a message using alice public key
+            var encryptedMessageBytes = BobEncryptText(alicePublicKey, message);
 
-            Assert.IsNotNull(cipher);
+            // send encrypted message to alice
 
-            var decryptedPlaintextBytes = decryptor.Decrypt(cipher);
-            var plaintext = Encoding.UTF8.GetString(decryptedPlaintextBytes);
+            // alice decrypts the message using her private key
+            var plaintext = AliceDecryptText(alicePrivateKey, encryptedMessageBytes);
 
             Assert.AreEqual(message, plaintext);
         }
@@ -30,19 +38,43 @@ namespace Rotherprivat.PqTest.Examples
         [TestMethod]
         public void HybridMLKemEncryptDecrypt_CompositeMLKem()
         {
-            string message = "The quick brown fox jumps over the lazy dog.";
+             string message = "The quick brown fox jumps over the lazy dog.";
+            
+            // generate key material
             var algorithm = CompositeMLKemAlgorithm.KMKem1024WithECDhP521Sha3;
 
-            using var decryptor = HybridMlKem.GenerateKey(algorithm);
+            using var keys = CompositeMLKem.GenerateKey(algorithm);
+            // you could also use: HybridMlKem.GenerateKey(algorithm);
 
-            var cipher = decryptor.Encrypt(Encoding.UTF8.GetBytes(message));
+            var alicePrivateKey = keys.ExportPkcs8PrivateKey();
+            var alicePublicKey = keys.ExportSubjectPublicKeyInfo();
 
-            Assert.IsNotNull(cipher);
+            // bob encrypts a message using alice public key
+            var encryptedMessageBytes = BobEncryptText(alicePublicKey, message);
 
-            var decryptedPlaintextBytes = decryptor.Decrypt(cipher);
-            var plaintext = Encoding.UTF8.GetString(decryptedPlaintextBytes);
+            // send encrypted message to alice
+
+            // alice decrypts the message using her private key
+            var plaintext = AliceDecryptText(alicePrivateKey, encryptedMessageBytes);
 
             Assert.AreEqual(message, plaintext);
+        }
+
+        private static byte[] BobEncryptText(byte[] derPublicKey, string message)
+        {
+            using var bob = HybridMlKem.ImportSubjectPublicKeyInfo(derPublicKey);
+            var cipher = bob.Encrypt(Encoding.UTF8.GetBytes(message));
+            Assert.IsNotNull(cipher);
+
+            return cipher.Serialize(); 
+        }
+
+        private static string AliceDecryptText(byte[] pkcs8PrivateKey, byte[] encryptedMessageBytes)
+        {
+            using var alice = HybridMlKem.ImportPkcs8PrivateKey(pkcs8PrivateKey);
+
+            var decryptedPlaintextBytes = alice.Decrypt(HybridMlKemCipherData.Deserialize(encryptedMessageBytes));
+            return Encoding.UTF8.GetString(decryptedPlaintextBytes);
         }
     }
 }
