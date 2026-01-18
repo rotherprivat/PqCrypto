@@ -207,3 +207,4 @@ $RECYCLE.BIN/
 *.msp
 /docfx/api
 /docfx/_site
+/docfx/index.md
