@@ -19,18 +19,22 @@ namespace Rotherprivat.PqCrypto.Cryptography
         /// Construct encryptor / decryptor using ML-KEM
         /// </summary>
         /// <param name="mlKem">ML-KKEM instance</param>
-        public HybridMlKem(MLKem mlKem)
+        /// <param name="dontDispose">Avoid disposing the Key-Exchange class, if attached to an external managed instance</param>
+        public HybridMlKem(MLKem mlKem, bool dontDispose = false)
         {
             _PlainMlKem = mlKem;
+            _DontDispose = dontDispose;
         }
 
         /// <summary>
         /// Construct encryptor / decryptor using CompositeMLKKEM
         /// </summary>
         /// <param name="mlKem">CompositeMLKKEM instance</param>
-        public HybridMlKem(CompositeMLKem compositeMLKem) 
+        /// <param name="dontDispose">Avoid disposing the Key-Exchange class, if attached to an external managed instance</param>
+        public HybridMlKem(CompositeMLKem compositeMLKem, bool dontDispose = false) 
         {
             _CompositeMlKem  = compositeMLKem;
+            _DontDispose = dontDispose;
         }
         #endregion
 
@@ -563,13 +567,15 @@ namespace Rotherprivat.PqCrypto.Cryptography
 
         private MLKem? _PlainMlKem  = default;
         private CompositeMLKem? _CompositeMlKem = default;
+        private readonly bool  _DontDispose = false;
+
         #endregion
 
         #region IDisposable
         /// <exclude/>
         protected virtual void Dispose(bool disposing)
         {
-            if (disposing)
+            if (disposing && !_DontDispose)
             {
                 _PlainMlKem?.Dispose();
                 _CompositeMlKem?.Dispose(); 
