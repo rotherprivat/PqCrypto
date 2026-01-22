@@ -8,6 +8,6 @@ behavior and the encoding of the keys may change in future, depending on the cha
 and the development of the PQC-algorithm in the .NET platform.
 
 See:
-- **Overview:** [Doc](docs/readme.md)
-- **API Description:** [API](xref:Rotherprivat.PqCrypto.Cryptography)
-
+- [**Overview**](docs/readme.md)
+- [**API Description**](xref:Rotherprivat.PqCrypto.Cryptography)
+- [**Source code**](https://github.com/rotherprivat/PqCrypto)
