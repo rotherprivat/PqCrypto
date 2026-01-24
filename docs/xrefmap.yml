@@ -352,6 +352,18 @@ references:
   commentId: Overload:Rotherprivat.KemBasedNet.Cryptography.CompositeMLKem.ImportSubjectPublicKeyInfo
   fullName: Rotherprivat.KemBasedNet.Cryptography.CompositeMLKem.ImportSubjectPublicKeyInfo
   nameWithType: CompositeMLKem.ImportSubjectPublicKeyInfo
+- uid: Rotherprivat.KemBasedNet.Cryptography.CompositeMLKem.IsSupported
+  name: IsSupported
+  href: api/Rotherprivat.KemBasedNet.Cryptography.CompositeMLKem.IsSupported.html#Rotherprivat_KemBasedNet_Cryptography_CompositeMLKem_IsSupported
+  commentId: P:Rotherprivat.KemBasedNet.Cryptography.CompositeMLKem.IsSupported
+  fullName: Rotherprivat.KemBasedNet.Cryptography.CompositeMLKem.IsSupported
+  nameWithType: CompositeMLKem.IsSupported
+- uid: Rotherprivat.KemBasedNet.Cryptography.CompositeMLKem.IsSupported*
+  name: IsSupported
+  href: api/Rotherprivat.KemBasedNet.Cryptography.CompositeMLKem.IsSupported.html
+  commentId: Overload:Rotherprivat.KemBasedNet.Cryptography.CompositeMLKem.IsSupported
+  fullName: Rotherprivat.KemBasedNet.Cryptography.CompositeMLKem.IsSupported
+  nameWithType: CompositeMLKem.IsSupported
 - uid: Rotherprivat.KemBasedNet.Cryptography.CompositeMLKemAlgorithm
   name: CompositeMLKemAlgorithm
   href: api/Rotherprivat.KemBasedNet.Cryptography.CompositeMLKemAlgorithm.html
@@ -823,6 +835,18 @@ references:
   commentId: Overload:Rotherprivat.KemBasedNet.Cryptography.HybridMLKem.ImportSubjectPublicKeyInfo
   fullName: Rotherprivat.KemBasedNet.Cryptography.HybridMLKem.ImportSubjectPublicKeyInfo
   nameWithType: HybridMLKem.ImportSubjectPublicKeyInfo
+- uid: Rotherprivat.KemBasedNet.Cryptography.HybridMLKem.IsSupported
+  name: IsSupported
+  href: api/Rotherprivat.KemBasedNet.Cryptography.HybridMLKem.IsSupported.html#Rotherprivat_KemBasedNet_Cryptography_HybridMLKem_IsSupported
+  commentId: P:Rotherprivat.KemBasedNet.Cryptography.HybridMLKem.IsSupported
+  fullName: Rotherprivat.KemBasedNet.Cryptography.HybridMLKem.IsSupported
+  nameWithType: HybridMLKem.IsSupported
+- uid: Rotherprivat.KemBasedNet.Cryptography.HybridMLKem.IsSupported*
+  name: IsSupported
+  href: api/Rotherprivat.KemBasedNet.Cryptography.HybridMLKem.IsSupported.html
+  commentId: Overload:Rotherprivat.KemBasedNet.Cryptography.HybridMLKem.IsSupported
+  fullName: Rotherprivat.KemBasedNet.Cryptography.HybridMLKem.IsSupported
+  nameWithType: HybridMLKem.IsSupported
 - uid: Rotherprivat.KemBasedNet.Cryptography.HybridMLKemCipherData
   name: HybridMLKemCipherData
   href: api/Rotherprivat.KemBasedNet.Cryptography.HybridMLKemCipherData.html
