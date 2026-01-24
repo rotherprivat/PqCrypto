@@ -38,6 +38,13 @@ namespace Rotherprivat.KemBasedNet.Cryptography
         }
         #endregion
 
+        #region Properties
+        /// <summary>
+        /// Indicates if the algorithm supported by the current platform
+        /// </summary>
+        public static bool IsSupported => MLKem.IsSupported;
+        #endregion
+
         #region Public methods: Key handling
         /// <summary>
         /// Generate keys for ML-KEM algorithm and create the encryptor / decryptor

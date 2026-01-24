@@ -24,6 +24,13 @@ namespace Rotherprivat.KemBasedNetTest.Cryptography
         }
 
         [TestMethod]
+        public void _00_IsSupported()
+        {
+            Assert.IsTrue(CompositeMLKem.IsSupported, "PQC-Algorithms not supported by your platform.");
+        }
+
+
+        [TestMethod]
         [DynamicData(nameof(CompositeMlKemAlgorithms))]
         public void _01_DecapsulateByTestVectors(CompositeMLKemAlgorithm algorithm)
         {

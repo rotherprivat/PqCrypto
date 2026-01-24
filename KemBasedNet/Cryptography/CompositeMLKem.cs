@@ -27,6 +27,11 @@ namespace Rotherprivat.KemBasedNet.Cryptography
         /// Algorithm description
         /// </summary>
         public CompositeMLKemAlgorithm  Algorithm { get; }
+
+        /// <summary>
+        /// Indicates if the algorithm supported by the current platform
+        /// </summary>
+        public static bool IsSupported => MLKem.IsSupported;
         #endregion
 
         #region Public methods: Key handling
